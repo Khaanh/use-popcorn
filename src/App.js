@@ -69,6 +69,11 @@ export default function App() {
 	const handleCloseMovie = () => {
 		setSelectedId(null);
 	};
+
+	const handleAddWatched = (movie) => {
+		setWatched((watched) => [...watched], movie);
+	};
+
 	useEffect(() => {
 		async function fetchMovies() {
 			try {
@@ -125,6 +130,7 @@ export default function App() {
 						<MovieDetails
 							selectedId={selectedId}
 							onCloseMovie={handleCloseMovie}
+							onAddWatched={handleAddWatched}
 						/>
 					) : (
 						<>
@@ -233,7 +239,7 @@ const Movie = ({ movie, onSelectMovie }) => {
 	);
 };
 
-const MovieDetails = ({ selectedId, onCloseMovie }) => {
+const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 	const [movie, setMovie] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -249,6 +255,18 @@ const MovieDetails = ({ selectedId, onCloseMovie }) => {
 		Director: director,
 		Genre: genre,
 	} = movie;
+
+	const handleAdd = () => {
+		const newWatchedMovie = {
+			imdbID: selectedId,
+			title,
+			year,
+			poster,
+			imdbRating: Number(imdbRating),
+			runtime: Number(runtime.split(" ").at(0)),
+		};
+		onAddWatched(newWatchedMovie);
+	};
 
 	useEffect(() => {
 		async function getMovieDetails() {
@@ -292,6 +310,10 @@ const MovieDetails = ({ selectedId, onCloseMovie }) => {
 					<section>
 						<div className="rating">
 							<StarRating maxRating={10} size={24} />
+							asdasd
+							<button className="btn-add" onClick={handleAdd}>
+								+ Add to list
+							</button>
 						</div>
 						<p>
 							<em>{plot}</em>
