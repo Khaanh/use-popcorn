@@ -71,7 +71,7 @@ export default function App() {
 	};
 
 	const handleAddWatched = (movie) => {
-		setWatched((watched) => [...watched], movie);
+		setWatched((watched) => [...watched, movie]);
 	};
 
 	useEffect(() => {
@@ -242,6 +242,7 @@ const Movie = ({ movie, onSelectMovie }) => {
 const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 	const [movie, setMovie] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
+	const [userRating, setUserRating] = useState("");
 
 	const {
 		Title: title,
@@ -265,7 +266,9 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 			imdbRating: Number(imdbRating),
 			runtime: Number(runtime.split(" ").at(0)),
 		};
+
 		onAddWatched(newWatchedMovie);
+		onCloseMovie();
 	};
 
 	useEffect(() => {
@@ -309,8 +312,11 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 
 					<section>
 						<div className="rating">
-							<StarRating maxRating={10} size={24} />
-							asdasd
+							<StarRating
+								maxRating={10}
+								size={24}
+								onSetRating={setUserRating}
+							/>
 							<button className="btn-add" onClick={handleAdd}>
 								+ Add to list
 							</button>
@@ -322,7 +328,7 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched }) => {
 						<p>Directed by {director}</p>
 					</section>
 
-					{selectedId}
+					{/* {selectedId} */}
 				</>
 			)}
 		</div>
@@ -372,8 +378,8 @@ const WatchedMoviesList = ({ watched }) => {
 const WatchedMovie = ({ movie }) => {
 	return (
 		<li>
-			<img src={movie.Poster} alt={`${movie.Title} poster`} />
-			<h3>{movie.Title}</h3>
+			<img src={movie.poster} alt={`${movie.title} poster`} />
+			<h3>{movie.title}</h3>
 			<div>
 				<p>
 					<span>⭐️</span>
