@@ -232,7 +232,7 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, watched }) => {
 			setIsLoading(true);
 			const res = await fetch(
 				// `http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&i=${selectedId}`
-				`http://www.omdbapi.com/?i=${selectedId}&apikey=${KEY} `
+				`https://www.omdbapi.com/?i=${selectedId}&apikey=${KEY} `
 			);
 
 			const data = await res.json();
